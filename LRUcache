@@ -77,3 +77,39 @@ void delNode(Node* oldNode){
         m[key]=newNode;
     }
 };
+
+
+
+// vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int> dq;
+        vector<int>res;
+ 
+ //1st window
+        for(int i=0;i<k;i++){
+          while(!dq.empty()&&nums[dq.front()]<=nums[i]){
+            dq.pop_back();
+          }  
+          dq.push_back(i);
+        }
+
+
+        //other windows
+        for(int i=k;i<nums.size();i++){
+            res.push_back(nums[dq.front()]);
+            //wrong element in the window
+            while(!dq.empty()&&dq.front()<=i-k){
+                dq.pop_front();
+            }
+
+            //delete smaller val
+              while(!dq.empty()&&nums[dq.front()]<=nums[i]){
+            dq.pop_back();
+          }  
+
+          dq.push_back(i);
+        }
+
+        res.push_back(nums[dq.front()]);
+         
+
+         return res;
